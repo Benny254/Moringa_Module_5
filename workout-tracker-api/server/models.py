@@ -13,7 +13,6 @@ VALID_CATEGORIES = {"cardio", "strength", "flexibility", "balance", "core"}
 class Exercise(db.Model):
     __tablename__ = "exercises"
 
-    # ---- Table constraints ----
     __table_args__ = (
         UniqueConstraint("name", name="uq_exercise_name"),
         CheckConstraint("length(name) > 0", name="ck_exercise_name_not_empty"),
@@ -24,17 +23,14 @@ class Exercise(db.Model):
     category = db.Column(db.String, nullable=False)
     equipment_needed = db.Column(db.Boolean, nullable=False, default=False)
 
-    # An Exercise has many WorkoutExercises
     workout_exercises = db.relationship(
         "WorkoutExercise",
         back_populates="exercise",
         cascade="all, delete-orphan",
     )
 
-    # An Exercise has many Workouts through WorkoutExercises
     workouts = association_proxy("workout_exercises", "workout")
 
-    # ---- Model validations ----
     @validates("name")
     def validate_name(self, key, value):
         if not value or not value.strip():
@@ -56,7 +52,6 @@ class Exercise(db.Model):
 class Workout(db.Model):
     __tablename__ = "workouts"
 
-    # ---- Table constraints ----
     __table_args__ = (
         CheckConstraint("duration_minutes > 0", name="ck_workout_duration_positive"),
     )
@@ -66,17 +61,16 @@ class Workout(db.Model):
     duration_minutes = db.Column(db.Integer, nullable=False)
     notes = db.Column(db.Text)
 
-    # A Workout has many WorkoutExercises
+    
     workout_exercises = db.relationship(
         "WorkoutExercise",
         back_populates="workout",
         cascade="all, delete-orphan",
     )
 
-    # A Workout has many Exercises through WorkoutExercises
     exercises = association_proxy("workout_exercises", "exercise")
 
-    # ---- Model validations ----
+
     @validates("duration_minutes")
     def validate_duration(self, key, value):
         if not isinstance(value, int) or value <= 0:
@@ -90,7 +84,6 @@ class Workout(db.Model):
 class WorkoutExercise(db.Model):
     __tablename__ = "workout_exercises"
 
-    # ---- Table constraints ----
     __table_args__ = (
         CheckConstraint("reps IS NULL OR reps >= 0", name="ck_we_reps_nonneg"),
         CheckConstraint("sets IS NULL OR sets >= 0", name="ck_we_sets_nonneg"),
@@ -107,11 +100,11 @@ class WorkoutExercise(db.Model):
     sets = db.Column(db.Integer)
     duration_seconds = db.Column(db.Integer)
 
-    # A WorkoutExercise belongs to a Workout / an Exercise
+    
     workout = db.relationship("Workout", back_populates="workout_exercises")
     exercise = db.relationship("Exercise", back_populates="workout_exercises")
 
-    # ---- Model validations ----
+
     @validates("reps", "sets", "duration_seconds")
     def validate_nonnegative(self, key, value):
         if value is not None and value < 0:
