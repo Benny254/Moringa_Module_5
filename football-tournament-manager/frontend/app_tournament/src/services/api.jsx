@@ -93,4 +93,13 @@ export const reportsApi = {
   teamsInTournament: (tournamentId) => api.get(`/reports/tournaments/${tournamentId}/teams`),
 };
 
+// ---------- Players ----------
+export const playersApi = {
+  list: (params) => api.get("/players", { params }),
+  get: (id) => api.get(`/players/${id}`),
+  create: (data) => api.post("/players", data),
+  update: (id, data) => api.put(`/players/${id}`, data),
+  remove: (id) => api.delete(`/players/${id}`),
+};
+
 export default api;
