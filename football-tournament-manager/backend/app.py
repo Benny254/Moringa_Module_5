@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from flask_restful import Api
+from flask_cors import CORS
 
 from config import Config
 from extensions import db, migrate, jwt, cors
@@ -11,6 +12,7 @@ from resources.teams import TeamListResource, TeamResource
 from resources.tournaments import TournamentListResource, TournamentResource
 from resources.registrations import RegistrationListResource, RegistrationResource
 from resources.matches import MatchListResource, MatchResource
+from resources.players import PlayerListResource, PlayerResource
 from resources.reports import (
     TeamsInTournamentResource,
     BiggestTournamentResource,
@@ -18,6 +20,10 @@ from resources.reports import (
     TopTeamsResource,
     RecentRegistrationsResource,
 )
+
+app = Flask(__name__)
+
+CORS(app)
 
 
 def create_app(config_class=Config):
@@ -59,6 +65,10 @@ def create_app(config_class=Config):
     # Matches
     api.add_resource(MatchListResource, "/api/matches")
     api.add_resource(MatchResource, "/api/matches/<int:match_id>")
+
+    # Players
+    api.add_resource(PlayerListResource, "/api/players")
+    api.add_resource(PlayerResource, "/api/players/<int:player_id>")
 
     # Reports (5 advanced queries)
     api.add_resource(TeamsInTournamentResource, "/api/reports/tournaments/<int:tournament_id>/teams")

@@ -95,6 +95,9 @@ class Team(db.Model):
     away_matches = db.relationship(
         "Match", foreign_keys="Match.away_team_id", back_populates="away_team"
     )
+    players = db.relationship(
+        "Player", back_populates="team", cascade="all, delete-orphan"
+    )
 
     def __repr__(self):
         return f"<Team {self.name}>"
@@ -163,5 +166,22 @@ class Match(db.Model):
     home_team = db.relationship("Team", foreign_keys=[home_team_id], back_populates="home_matches")
     away_team = db.relationship("Team", foreign_keys=[away_team_id], back_populates="away_matches")
 
+class Player(db.Model):
+    __tablename__ = "players"
+
+    id = db.Column(db.Integer, primary_key=True)
+    team_id = db.Column(db.Integer, db.ForeignKey("teams.id"), nullable=False)
+    name = db.Column(db.String(120), nullable=False)
+    position = db.Column(db.String(30))  # Goalkeeper | Defender | Midfielder | Forward
+    jersey_number = db.Column(db.Integer)
+    date_of_birth = db.Column(db.Date)
+    created_at = db.Column(db.DateTime, default=now_utc)
+
+    team = db.relationship("Team", back_populates="players")
+
+    __table_args__ = (
+        db.UniqueConstraint("team_id", "jersey_number", name="uq_team_jersey"),
+    )
+
     def __repr__(self):
-        return f"<Match {self.home_team_id} vs {self.away_team_id}>"
+        return f"<Player {self.name} (#{self.jersey_number})>"

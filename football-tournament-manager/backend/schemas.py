@@ -108,6 +108,22 @@ class MatchSchema(Schema):
     away_team = fields.Nested(TeamBriefSchema, dump_only=True)
 
 
+class PlayerSchema(Schema):
+    id = fields.Int(dump_only=True)
+    team_id = fields.Int(required=True)
+    name = fields.Str(required=True, validate=validate.Length(min=2, max=120))
+    position = fields.Str(
+        allow_none=True,
+        validate=validate.OneOf(["Goalkeeper", "Defender", "Midfielder", "Forward"]),
+    )
+    jersey_number = fields.Int(allow_none=True)
+    date_of_birth = fields.Date(allow_none=True)
+    created_at = fields.DateTime(dump_only=True)
+    team = fields.Nested(TeamBriefSchema, dump_only=True)
+
+
+player_schema = PlayerSchema()
+players_schema = PlayerSchema(many=True)    
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 profile_schema = ProfileSchema()
