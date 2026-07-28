@@ -1,0 +1,88 @@
+:root {
+  /* Color: pitch-at-dusk palette */
+  --pitch-900: #0b2818;   /* deep pitch shadow — scoreboard bg */
+  --pitch-800: #103822;
+  --pitch-700: #16432a;   /* primary green — nav, headers */
+  --pitch-500: #2d6a4f;   /* turf green — accents, links */
+  --pitch-100: #e7efe9;   /* pale turf tint — subtle fills */
+  --chalk: #f7f5ef;       /* chalk-line cream — page background */
+  --paper: #ffffff;       /* card surfaces */
+  --gold: #e8b342;        /* floodlight gold — CTAs, highlights */
+  --gold-dark: #b8862a;
+  --ink: #16201a;         /* near-black green-tinted text */
+  --ink-soft: #4d5850;
+  --line: #ddd6c4;        /* hairline / perforation color */
+  --red-card: #b3432b;    /* danger / rejected */
+  --amber: #c98a1f;       /* pending */
+
+  /* Type */
+  --font-display: "Oswald", "Arial Narrow", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Layout */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-card: 0 1px 2px rgba(11, 40, 24, 0.06), 0 8px 24px rgba(11, 40, 24, 0.08);
+  --shadow-lift: 0 12px 32px rgba(11, 40, 24, 0.16);
+  --container-max: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--chalk);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  color: var(--pitch-900);
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--pitch-900);
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

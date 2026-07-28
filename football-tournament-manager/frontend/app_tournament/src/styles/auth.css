@@ -1,0 +1,124 @@
+.auth-shell {
+  min-height: calc(100vh - 68px);
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+
+.auth-visual {
+  background: linear-gradient(160deg, var(--pitch-900) 0%, var(--pitch-700) 100%);
+  color: var(--chalk);
+  padding: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(247,245,239,0.05) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(90deg, rgba(247,245,239,0.05) 0 1px, transparent 1px 64px);
+  pointer-events: none;
+}
+
+.auth-visual-content {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-kicker {
+  font-family: var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.auth-headline {
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.08;
+  color: var(--chalk);
+  margin-bottom: 20px;
+}
+
+.auth-sub {
+  color: rgba(247, 245, 239, 0.75);
+  max-width: 40ch;
+  line-height: 1.6;
+}
+
+.auth-stats {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.auth-stat-num {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.auth-stat-label {
+  font-size: 12px;
+  color: rgba(247, 245, 239, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.auth-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background: var(--chalk);
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 380px;
+}
+
+.auth-form h2 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.auth-form .form-sub {
+  color: var(--ink-soft);
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+.auth-form .stack {
+  margin-bottom: 20px;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.auth-switch a {
+  color: var(--pitch-700);
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .auth-shell {
+    grid-template-columns: 1fr;
+  }
+  .auth-visual {
+    display: none;
+  }
+}
